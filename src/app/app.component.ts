@@ -1,32 +1,31 @@
 import { Component } from '@angular/core';
-import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-  imports: [NgIf] // Não esqueça de importar o NgIf para condicionar partes da tela
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  display: string = ''; // Variável para exibir no display da calculadora
-  result: string = '';  // Resultado da operação
+  display = '';  // Variável para armazenar os números digitados
+  result = '';   // Variável para armazenar o resultado da operação
 
-  // Função para lidar com os cliques dos botões
-  handleClick(value: string): void {
-    if (value === 'C') {
-      // Limpar o display
-      this.display = '';
-    } else if (value === '=') {
-      // Avaliar a expressão e mostrar o resultado
+  handleClick(value: string) {
+    if (value === '=') {
+      // Aqui você pode usar uma função para calcular o valor
       try {
-        this.result = eval(this.display).toString();  // Calcula a expressão
-      } catch {
-        this.result = 'Erro';  // Caso a expressão seja inválida
+        this.result = eval(this.display);  // Calcula a expressão
+      } catch (e) {
+        this.result = 'Error';  // Caso tenha um erro na expressão
       }
+    } else if (value === 'C') {
+      this.clear();  // Se for 'C', limpa tudo
     } else {
-      // Adiciona o valor ao display
-      this.display += value;
+      this.display += value;  // Caso contrário, adiciona o valor ao display
     }
+  }
+
+  clear() {
+    this.display = '';  // Limpa o conteúdo digitado
+    this.result = '';   // Limpa o resultado
   }
 }
